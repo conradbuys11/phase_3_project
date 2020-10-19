@@ -6,7 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => data.json())
     .then(brand => document.querySelector('div.test').innerText = brand.name)
     listAllProducts()
+    document.addEventListener('click', onClick)
 })
+
+function onClick(e){
+    if(e.target.classList.contains('purchase-button')){
+        purchaseProduct(e.target.parentNode)
+    }
+}
 
 function listAllProducts(){
     //peep our db's products index page
@@ -17,14 +24,45 @@ function listAllProducts(){
 
 function listProduct(product){
     //add a li with the product name to the products div
-    let li = document.createElement('li')
-    li.classList.add('product')
-    li.innerText = product.name
+    let div = document.createElement('div')
+    div.classList.add('product')
+    div.dataset.name = product.name
+    div.dataset.quantity = product.quantity
+    div.dataset.id = product.id
+
+    let p = document.createElement('p')
+    p.textContent = `${product.name}  --  ${product.quantity} left!`
 
     let button = document.createElement('li')
     button.classList.add('purchase-button')
     button.innerText = 'Purchase'
-    
-    products_div().append(li)
-    li.append(button)
+
+    products_div().append(div)
+    div.append(p)
+    div.append(button)
+}
+
+function updateProduct(productDiv){
+    productDiv.querySelector('p').textContent = `${productDiv.dataset.name}  --  ${productDiv.dataset.quantity} left!`
+}
+
+function purchaseProduct(productDiv){
+    if(productDiv.dataset.quantity > 0){
+        let pck = {}
+        pck.method = 'PATCH'
+        pck.headers = {'Content-Type': 'application/json'}
+        pck.body = JSON.stringify({quantity: productDiv.dataset.quantity - 1})
+
+        //console.log(pck.body) //returns {"quantity":4}
+        
+        fetch(URL + `products/${productDiv.dataset.id}`, pck)
+        .then(data => data.json())
+        .then(updatedProduct => {
+            productDiv.dataset.quantity = updatedProduct.quantity
+            updateProduct(productDiv)
+        })
+    }
+    else{
+        console.log('no')
+    }
 }
