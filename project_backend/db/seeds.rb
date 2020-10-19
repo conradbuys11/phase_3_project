@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Brand.destroy_all
+Product.destroy_all
+Purchase.destroy_all
+User.destroy_all
+
+brand = Brand.create(name: "Test Brand")
+
+User.create(name: "Conrad")
+
+Product.create(name: "Fabulous Funky Sunglasses", brand: brand, price: 4.54, category: "Accessory", color_primary: "Purple")
