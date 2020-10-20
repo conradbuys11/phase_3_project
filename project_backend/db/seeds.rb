@@ -13,7 +13,9 @@ Purchase.destroy_all
 
 
 brand = Brand.create(name: "Test Brand")
+brand2 = Brand.create(name: "Heat Strokes")
 
 User.create(name: "Conrad")
 
 Product.create(name: "Fabulous Funky Sunglasses", brand: brand, price: 4.54, category: "Accessory", color_primary: "Purple", quantity: 5)
+Product.create(name: "Sizzlin Slides", brand: brand2, price: 11.94, category: "Shoes", color_primary: "Hot-Red", quantity: 17)
