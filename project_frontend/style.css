@@ -1,6 +1,4 @@
-body{
-    /* background-image: url('https://gallery-duesseldorf.com/wp-content/uploads/sites/8/2020/09/Gallery-Fashion-Shoes-20.8-102_Nile-768x512.jpg'); */
-}
+/* background-image: url('https://gallery-duesseldorf.com/wp-content/uploads/sites/8/2020/09/Gallery-Fashion-Shoes-20.8-102_Nile-768x512.jpg'); */
 
 .card{
     margin: auto;
@@ -26,4 +24,21 @@ body{
     margin: auto;
     float: right;
     text-align: right;
+}
+
+.little-text{
+    font-size: 80%;
+    font-style: italic;
+    color: red;
+    margin-top: 0px;
+}
+
+.list-card{
+    float: center;
+    text-align: center;
+}
+
+.no-bottom-margin{
+    font-weight: bold;
+    margin-bottom: 0px;
 }

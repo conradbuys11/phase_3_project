@@ -2,6 +2,7 @@ const URL = 'http://localhost:3000/'
 const products_div = () => document.querySelector('div#products-div') //make sure to say products_div() when referencing this!
 const product_card = () => document.querySelector('div.card')
 const product_list = () => document.querySelector('div#product-list-cards')
+const review_div = () => document.querySelector('#last-purchase')
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch(URL + 'brands/1')
@@ -35,12 +36,22 @@ function listAllProducts(){
 
 function buildProductList(products){
     products.forEach(product => {
+        let div = document.createElement('div')
+        div.classList.add('product-switch')
+        div.classList.add('list-card')
+        div.dataset.id = product.id
         let p = document.createElement('p')
+        p.classList.add('no-bottom-margin')
         //debugger
-        p.classList.add('product-switch')
-        p.dataset.id = product.id
         p.innerText = product.name
-        product_list().append(p)
+        let p2 = document.createElement('p')
+        p2.classList.add('little-text')
+        let date = product.release_date.split(' ')[0].split('-')
+        let time = product.release_date.split(' ')[1].split(':')
+        p2.innerText = `${time[0]}:${time[1]} - ${date[1]}/${date[2]}`
+        product_list().append(div)
+        div.append(p)
+        div.append(p2)
     })
 }
 
@@ -64,6 +75,10 @@ function listProduct(product){ //make the elements ahead of time, and just updat
     // products_div().append(div)
     // div.append(p)
     // div.append(button)
+
+    review_div().querySelector('p').innerText = ''
+    console.log(product.purchases[Object.keys(product.purchases)[Object.keys(product.purchases).length - 1]].user_id)
+    //fetch(product.purchases)
 }
 
 function updateProduct(productDiv){
@@ -87,7 +102,7 @@ function purchaseProduct(productDiv){
             let create_pck = {}
             create_pck.method = 'POST'
             create_pck.headers = {'Content-Type': 'application/json'}
-            create_pck.body = JSON.stringify({product_id: productDiv.dataset.id, user_id: 0})
+            create_pck.body = JSON.stringify({product_id: productDiv.dataset.id, user_id: 13})
             fetch(URL + 'purchases', create_pck)
             .then(data => data.json())
             .then(console.log('We did it!'))
