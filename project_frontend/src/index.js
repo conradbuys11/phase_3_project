@@ -15,6 +15,11 @@ function onClick(e){
     if(e.target.classList.contains('purchase-button')){
         purchaseProduct(e.target.parentNode)
     }
+    else if(e.target.classList.contains('product-switch')){
+        fetch(URL+`products/${e.target.dataset.id}`)
+        .then(data => data.json())
+        .then(listProduct)
+    }
 }
 
 function listAllProducts(){
@@ -30,6 +35,8 @@ function listAllProducts(){
 function buildProductList(products){
     products.forEach(product => {
         let p = document.createElement('p')
+        //debugger
+        p.classList.add('product-switch')
         p.dataset.id = product.id
         p.innerText = product.name
         product_list().append(p)
@@ -45,8 +52,9 @@ function listProduct(product){ //make the elements ahead of time, and just updat
     div.dataset.quantity = product.quantity
     div.dataset.id = product.id
 
-    let p = div.querySelector('p')
-    p.textContent = `${product.name}  --  ${product.quantity} left!`
+    div.querySelector('p').textContent = `${product.name}  --  ${product.quantity} left!`
+    div.querySelector('div.left').textContent = `Primary Color: ${product.color_primary}`
+    div.querySelector('div.right').textContent = `Category: ${product.category}`
 
     let button = div.querySelector('li.purchase-button')
     // button.classList.add('purchase-button')

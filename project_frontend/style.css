@@ -2,12 +2,24 @@
     margin: auto;
     float: center;
     text-align: center;
-    width: 500px;
+    width: 30%;
     border: solid 1px;
 }
 
 #product-list-cards{
     border: solid 1px;
-    width: 250px;
+    width: 15%;
     float: left;
+}
+
+.left{
+    margin: auto;
+    float: left;
+    text-align: left;
+}
+
+.right{
+    margin: auto;
+    float: right;
+    text-align: right;
 }
