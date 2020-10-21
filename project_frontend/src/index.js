@@ -136,7 +136,7 @@ function listProduct(product){ //make the elements ahead of time, and just updat
     div.querySelector('img').src = IMG_GALLERY[product.photo_id]
 
     div.querySelector('p').textContent = `${product.name}  --  ${product.quantity} left!`
-    div.querySelector('div.left').textContent = `Primary Color: ${product.color_primary}`
+    div.querySelector('div.left').innerHTML = `Primary Color: ${product.color_primary}<br>Price: ${numAsPrice(product.price)}`
     div.querySelector('div.right').innerHTML = `Category: ${product.category}<br>Release Date: ${parseDateTime(product.release_date)}`
     //console.log(typeof(product.created_at))
     // let button = div.querySelector('button.purchase-button')
@@ -150,6 +150,15 @@ function listProduct(product){ //make the elements ahead of time, and just updat
     //review_div().querySelector('p').innerText = ''
     //console.log(product.purchases[Object.keys(product.purchases)[Object.keys(product.purchases).length - 1]].user_id)
     //fetch(product.purchases)
+}
+
+function numAsPrice(price){
+    debugger
+    let newPrice = '$' + price
+    if(newPrice.split(/\./)[1].length < 2){
+        newPrice += '0'
+    }
+    return newPrice
 }
 
 function updateProduct(productDiv){
@@ -256,6 +265,11 @@ function onlyShowCategory(category){
             product.style.display = ''
         }
     })
+}
+
+function sortByReleaseDay(){
+    orderedList = []
+
 }
 
 function showAll(){
