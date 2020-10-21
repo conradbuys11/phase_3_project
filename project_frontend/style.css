@@ -10,6 +10,8 @@
 
 .front-card{
     margin: auto;
+    margin-left: 5%;
+    margin-right: 5%;
     text-align: center;
     width: 15%;
     border: solid 1px;
@@ -17,6 +19,7 @@
 
 #last-purchase{
     float: right;
+    width: 15%;
 }
 
 #product-list-cards{
@@ -38,7 +41,7 @@
 }
 
 .little-text{
-    font-size: 80%;
+    font-size: 70%;
     font-style: italic;
     color: red;
     margin-top: 0px;

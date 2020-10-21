@@ -11,7 +11,7 @@ class Product < ApplicationRecord
         'Stylin', 'The Hotness', 'Funky'
     ]
     secondWord = [
-        'Sunglasses', 'Slides', 'Top', 'Shirt', 'Kicks', 'Tank', 'Jeans'
+        'Sunglasses', 'Slides', 'Top', 'Shirt', 'Kicks', 'Tank', 'Jeans', 'Slacks', 'Watch'
     ]
     name = ""
     name += firstWord.sample + " "
@@ -28,8 +28,20 @@ class Product < ApplicationRecord
     return "2020-#{nums[0..11].sample}-#{nums[0..30].sample} #{nums[0..22].sample}:#{nums.sample}:#{nums.sample} -0800"
   end
 
-  def self.category_creator
-      return ["Shirt", "Pants", "Accessory", "Shoes"].sample
+  def self.category_creator(name = nil)
+    if name != nil
+      last_word = name.split(' ')[-1]
+      if last_word == 'Sunglasses' || last_word == 'Watch'
+        return 'Accessory'
+      elsif last_word == 'Slides' || last_word == 'Kicks'
+        return 'Shoes'
+      elsif last_word == 'Top' || last_word == 'Shirt' || last_word == 'Tank'
+        return 'Shirt'
+      elsif last_word == 'Jeans' || last_word == 'Slacks'
+        return 'Pants'
+      end
+    end
+    return ["Shirt", "Pants", "Accessory", "Shoes"].sample
   end
 
   def self.color_creator
@@ -38,7 +50,8 @@ class Product < ApplicationRecord
   end
 
   def self.product_creator
-      Product.create(name: Product.name_creator, brand: Brand.first, price: "#{rand(0..200)}.#{rand(0..99)}".to_f, category: Product.category_creator, color_primary: Product.color_creator, quantity: rand(4..25), release_date: Product.date_creator, photo_id: rand(0..12))
+    name = Product.name_creator
+    Product.create(name: name, brand: Brand.first, price: "#{rand(0..200)}.#{rand(0..99)}".to_f, category: Product.category_creator(name), color_primary: Product.color_creator, quantity: rand(4..25), release_date: Product.date_creator, photo_id: rand(0..12))
   end
 
   def self.make_release_date

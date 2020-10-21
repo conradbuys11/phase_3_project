@@ -3,6 +3,7 @@ const products_div = () => document.querySelector('div#products-div') //make sur
 const product_card = () => document.querySelector('div.card')
 const product_list = () => document.querySelector('div#product-list-cards div')
 const review_div = () => document.querySelector('#last-purchase')
+const sorting_buttons = () => document.querySelector('h2')
 
 const IMG_GALLERY = [
     './imgs/photo1.jpg',
@@ -25,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => data.json())
     .then(brand => document.querySelector('h1.test').innerText = brand.name)
     listAllProducts()
-    console.log(parseDateTime('2020-10-20 15:14:41 -0400'))
+
+    //console.log(parseDateTime('2020-10-20 15:14:41 -0400'))
     document.addEventListener('click', onClick)
 })
 
@@ -42,6 +44,18 @@ function onClick(e){
         fetch(URL+'products/', {method: 'POST', headers: {'Content-Type': 'application/json'}})
         .then(data => data.json())
         .then(buildProductListSingle)
+    }
+    else if(e.target.classList.contains('sort-accessory')){
+        sortByCategoryFirst('Accessory')
+    }
+    else if(e.target.classList.contains('show-accessory')){
+        onlyShowCategory('Accessory')
+    }
+    else if(e.target.classList.contains('show-all')){
+        showAll()
+    }
+    else if(e.target.classList.contains('show-shoes')){
+        onlyShowCategory('Shoes')
     }
 }
 
@@ -64,7 +78,7 @@ function setUpFrontPage(products){
 }
 
 function buildProductList(products){
-    debugger
+    //debugger
     products.forEach(buildProductListSingle)
 }
 
@@ -72,7 +86,11 @@ function buildProductListSingle(product){
     let div = document.createElement('div')
     div.classList.add('product-switch')
     div.classList.add('list-card')
-    div.dataset.id = `product.id`
+    div.dataset.id = `${product.id}`
+    div.dataset.category = `${product.category}`
+    div.dataset.price = `${product.price}`
+    div.dataset.color = `${product.color_primary}`
+    div.dataset.releaseDate = `${product.release_date}`
 
     let p = document.createElement('p')
     p.classList.add('no-bottom-margin')
@@ -206,4 +224,26 @@ function parseDateTime(dateTime){
             break;
     }
     return `${month} ${date[2]} @ ${time[0]}:${time[1]}`
+}
+
+function sortByCategoryFirst(category){
+    //debugger
+    let topDivs = product_list().querySelectorAll(`div [data-category='${category}']`)
+    topDivs.forEach(div => {
+        div.parentNode.insertBefore(div, div.parentNode.childNodes[0])
+    })
+}
+
+function onlyShowCategory(category){
+    product_list().querySelectorAll('div').forEach(product => {
+        if(product.dataset.category != category){
+            product.style = 'display: none;'
+        }
+    })
+}
+
+function showAll(){
+    product_list().querySelectorAll('div').forEach(product => {
+        product.style = 'display: inline;'
+    })
 }
