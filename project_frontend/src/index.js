@@ -4,6 +4,22 @@ const product_card = () => document.querySelector('div.card')
 const product_list = () => document.querySelector('div#product-list-cards')
 const review_div = () => document.querySelector('#last-purchase')
 
+const IMG_GALLERY = [
+    './imgs/photo1.jpg',
+    './imgs/photo2.jpg',
+    './imgs/photo3.jpg',
+    './imgs/photo4.jpg',
+    './imgs/photo5.jpg',
+    './imgs/photo6.jpg',
+    './imgs/photo7.jpg',
+    './imgs/photo8.jpg',
+    './imgs/photo9.jpg',
+    './imgs/photo10.jpg',
+    './imgs/photo11.jpg',
+    './imgs/photo12.jpg',
+    './imgs/photo13.jpg'
+]
+
 document.addEventListener('DOMContentLoaded', () => {
     fetch(URL + 'brands/1')
     .then(data => data.json())
@@ -30,8 +46,12 @@ function listAllProducts(){
     .then(data => data.json())
     .then(products => {
         buildProductList(products)
-        listProduct(products[0])
+        // listProduct(products[0])
     })
+}
+
+function setUpFrontPage(){
+
 }
 
 function buildProductList(products){
@@ -39,16 +59,22 @@ function buildProductList(products){
         let div = document.createElement('div')
         div.classList.add('product-switch')
         div.classList.add('list-card')
-        div.dataset.id = product.id
+        div.dataset.id = `product.id`
+
         let p = document.createElement('p')
         p.classList.add('no-bottom-margin')
+        p.classList.add('product-switch')
+        p.dataset.id = product.id //p data-id =
+        p.dataset.butts = 'hehehe'
         //debugger
         p.innerText = product.name
+
         let p2 = document.createElement('p')
         p2.classList.add('little-text')
         let date = product.release_date.split(' ')[0].split('-')
         let time = product.release_date.split(' ')[1].split(':')
         p2.innerText = `${time[0]}:${time[1]} - ${date[1]}/${date[2]}`
+
         product_list().append(div)
         div.append(p)
         div.append(p2)
@@ -57,12 +83,17 @@ function buildProductList(products){
 
 function listProduct(product){ //make the elements ahead of time, and just update what is inside the content
     //add a li with the product name to the products div
+    document.querySelector('.front-page-cards').style.display = 'none';
+    document.querySelector('.card').style.display = 'block';
     let div = product_card()
     // div.classList.add('product')
     // div.classList.add('card')
     div.dataset.name = product.name
     div.dataset.quantity = product.quantity
     div.dataset.id = product.id
+
+    //div.querySelector('img').src = IMG_GALLERY[Math.floor(Math.random() * IMG_GALLERY.length)]
+    div.querySelector('img').src = IMG_GALLERY[product.photo_id]
 
     div.querySelector('p').textContent = `${product.name}  --  ${product.quantity} left!`
     div.querySelector('div.left').textContent = `Primary Color: ${product.color_primary}`
@@ -77,7 +108,7 @@ function listProduct(product){ //make the elements ahead of time, and just updat
     // div.append(button)
 
     review_div().querySelector('p').innerText = ''
-    console.log(product.purchases[Object.keys(product.purchases)[Object.keys(product.purchases).length - 1]].user_id)
+    //console.log(product.purchases[Object.keys(product.purchases)[Object.keys(product.purchases).length - 1]].user_id)
     //fetch(product.purchases)
 }
 

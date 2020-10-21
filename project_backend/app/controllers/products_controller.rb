@@ -14,6 +14,11 @@ class ProductsController < ApplicationController
         render json: product.to_json
     end
 
+    def create
+        product = Product.product_creator
+        render json: product.to_json
+    end
+
     private
 
 end
