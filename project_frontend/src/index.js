@@ -1,4 +1,5 @@
 const URL = 'http://localhost:3000/'
+const top_header = () => document.querySelector('h1')
 const products_div = () => document.querySelector('div#products-div') //make sure to say products_div() when referencing this!
 const product_card = () => document.querySelector('div.card')
 const product_list = () => document.querySelector('div#product-list-cards div')
@@ -22,9 +23,18 @@ const IMG_GALLERY = [
 ]
 
 document.addEventListener('DOMContentLoaded', () => {
+
     fetch(URL + 'brands/1')
     .then(data => data.json())
-    .then(brand => document.querySelector('h1.test').innerText = brand.name)
+    .then(brand => top_header().innerText = brand.name)
+
+    fetch(URL + 'users')
+    .then(data => data.json())
+    .then(users => {
+        top_header().dataset.userName = users[0].name
+        top_header().dataset.userId = users[0].id
+    })
+
     listAllProducts()
 
     //console.log(parseDateTime('2020-10-20 15:14:41 -0400'))
@@ -137,7 +147,7 @@ function listProduct(product){ //make the elements ahead of time, and just updat
     // // div.append(p)
     // // div.append(button)
 
-    review_div().querySelector('p').innerText = ''
+    //review_div().querySelector('p').innerText = ''
     //console.log(product.purchases[Object.keys(product.purchases)[Object.keys(product.purchases).length - 1]].user_id)
     //fetch(product.purchases)
 }
@@ -163,10 +173,13 @@ function purchaseProduct(productDiv){
             let create_pck = {}
             create_pck.method = 'POST'
             create_pck.headers = {'Content-Type': 'application/json'}
-            create_pck.body = JSON.stringify({product_id: productDiv.dataset.id, user_id: 13})
+            create_pck.body = JSON.stringify({product_id: productDiv.dataset.id, user_id: top_header().dataset.userId})
             fetch(URL + 'purchases', create_pck)
             .then(data => data.json())
-            .then(console.log('We did it!'))
+            .then(purchase => {
+                console.log(purchase.created_at)
+                review_div().querySelector('p').innerText = `${top_header().dataset.userName} bought ${updatedProduct.name} on ${parseDateTime(purchase.created_at)}`
+            })
         })
     }
     else{
@@ -178,7 +191,7 @@ function parseDateTime(dateTime){
     //2020-10-20 15:14:41 -0400
     //Wednesday, September 4 @ 8:03 AM
     //debugger
-    let dt = dateTime.split(' ') //2020-10-20, 15:14:41, -0400
+    let dt = dateTime.split(/[\s.TZ]/) //2020-10-20, 15:14:41, -0400 //or 2020-10-20, 15:14:41, 049238
     let time = dt[1].split(':') //15, 14, 41
     let date = dt[0].split('-') //2020, 10, 20
     let month;
@@ -237,13 +250,16 @@ function sortByCategoryFirst(category){
 function onlyShowCategory(category){
     product_list().querySelectorAll('div').forEach(product => {
         if(product.dataset.category != category){
-            product.style = 'display: none;'
+            product.style.display = 'none'
+        }
+        else{
+            product.style.display = ''
         }
     })
 }
 
 function showAll(){
     product_list().querySelectorAll('div').forEach(product => {
-        product.style = 'display: inline;'
+        product.style.display = ''
     })
 }
