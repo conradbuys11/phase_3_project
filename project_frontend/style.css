@@ -8,6 +8,17 @@
     border: solid 1px;
 }
 
+.front-card{
+    margin: auto;
+    text-align: center;
+    width: 15%;
+    border: solid 1px;
+}
+
+#last-purchase{
+    float: right;
+}
+
 #product-list-cards{
     border: solid 1px;
     width: 15%;

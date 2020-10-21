@@ -1,7 +1,7 @@
 const URL = 'http://localhost:3000/'
 const products_div = () => document.querySelector('div#products-div') //make sure to say products_div() when referencing this!
 const product_card = () => document.querySelector('div.card')
-const product_list = () => document.querySelector('div#product-list-cards')
+const product_list = () => document.querySelector('div#product-list-cards div')
 const review_div = () => document.querySelector('#last-purchase')
 
 const IMG_GALLERY = [
@@ -38,6 +38,11 @@ function onClick(e){
         .then(data => data.json())
         .then(listProduct)
     }
+    else if(e.target.id == "new-product"){
+        fetch(URL+'products/', {method: 'POST', headers: {'Content-Type': 'application/json'}})
+        .then(data => data.json())
+        .then(buildProductListSingle)
+    }
 }
 
 function listAllProducts(){
@@ -46,39 +51,46 @@ function listAllProducts(){
     .then(data => data.json())
     .then(products => {
         buildProductList(products)
+        setUpFrontPage(products)
         // listProduct(products[0])
     })
 }
 
-function setUpFrontPage(){
-
+function setUpFrontPage(products){
+    frontCards = document.querySelectorAll('div.front-card')
+    for(let i = 0; i < 6; i++){
+        frontCards[i].querySelector('p').innerText = products[i].name
+    }
 }
 
 function buildProductList(products){
-    products.forEach(product => {
-        let div = document.createElement('div')
-        div.classList.add('product-switch')
-        div.classList.add('list-card')
-        div.dataset.id = `product.id`
+    debugger
+    products.forEach(buildProductListSingle)
+}
 
-        let p = document.createElement('p')
-        p.classList.add('no-bottom-margin')
-        p.classList.add('product-switch')
-        p.dataset.id = product.id //p data-id =
-        p.dataset.butts = 'hehehe'
-        //debugger
-        p.innerText = product.name
+function buildProductListSingle(product){
+    let div = document.createElement('div')
+    div.classList.add('product-switch')
+    div.classList.add('list-card')
+    div.dataset.id = `product.id`
 
-        let p2 = document.createElement('p')
-        p2.classList.add('little-text')
-        let date = product.release_date.split(' ')[0].split('-')
-        let time = product.release_date.split(' ')[1].split(':')
-        p2.innerText = `${time[0]}:${time[1]} - ${date[1]}/${date[2]}`
+    let p = document.createElement('p')
+    p.classList.add('no-bottom-margin')
+    p.classList.add('product-switch')
+    p.dataset.id = product.id //p data-id =
+    p.dataset.butts = 'hehehe'
+    //debugger
+    p.innerText = product.name
 
-        product_list().append(div)
-        div.append(p)
-        div.append(p2)
-    })
+    let p2 = document.createElement('p')
+    p2.classList.add('little-text')
+    let date = product.release_date.split(' ')[0].split('-')
+    let time = product.release_date.split(' ')[1].split(':')
+    p2.innerText = `${time[0]}:${time[1]} - ${date[1]}/${date[2]}`
+
+    product_list().append(div)
+    div.append(p)
+    div.append(p2)
 }
 
 function listProduct(product){ //make the elements ahead of time, and just update what is inside the content
@@ -99,13 +111,13 @@ function listProduct(product){ //make the elements ahead of time, and just updat
     div.querySelector('div.left').textContent = `Primary Color: ${product.color_primary}`
     div.querySelector('div.right').innerHTML = `Category: ${product.category}<br>Release Date: ${parseDateTime(product.release_date)}`
     //console.log(typeof(product.created_at))
-    let button = div.querySelector('li.purchase-button')
-    // button.classList.add('purchase-button')
-    button.innerText = 'Purchase'
+    // let button = div.querySelector('button.purchase-button')
+    // // button.classList.add('purchase-button')
+    // button.innerText = 'Purchase'
 
-    // products_div().append(div)
-    // div.append(p)
-    // div.append(button)
+    // // products_div().append(div)
+    // // div.append(p)
+    // // div.append(button)
 
     review_div().querySelector('p').innerText = ''
     //console.log(product.purchases[Object.keys(product.purchases)[Object.keys(product.purchases).length - 1]].user_id)
