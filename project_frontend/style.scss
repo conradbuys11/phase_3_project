@@ -1,5 +1,14 @@
 /* background-image: url('https://gallery-duesseldorf.com/wp-content/uploads/sites/8/2020/09/Gallery-Fashion-Shoes-20.8-102_Nile-768x512.jpg'); */
 
+$primary-color: grey;
+
+
+body {
+
+    background-color: $primary-color;
+
+}
+
 .card{
     margin: auto;
     float: center;
