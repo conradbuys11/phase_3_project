@@ -1,0 +1,69 @@
+body{
+
+  background-color: papayawhip;
+
+}
+
+.card{
+  margin:auto;
+  float:center;
+  text-align:center;
+  width:40%;
+  border:solid 1px
+}
+
+/* .front-card{
+  margin:auto;
+  margin-left:5%;
+  margin-right:5%;
+  text-align:center;
+  width:15%;
+  border:solid 1px
+} */
+
+#last-purchase{
+  color: #ff9966;
+  float:right;
+  width:20%
+}
+
+/* #product-list-cards{
+  border:solid 1px;
+  width:15%;
+  float:left
+} */
+
+.left{
+  margin:auto;
+  float:left;
+  text-align:left}
+  
+.right{
+  margin:auto;
+  float:right;
+  text-align:right}
+  
+/* .little-text{
+  font-size:70%;
+  font-style:italic;
+  color:red;
+  margin-top:0px
+} */
+
+/* .list-card{
+  float:center;
+  text-align:center
+} */
+
+/* .no-bottom-margin{
+  font-weight:bold;
+  margin-bottom:0px
+} */
+
+.sort-by{
+  color: #ff9966;
+}
+
+#products-div{
+  margin-top: 3%;
+}
