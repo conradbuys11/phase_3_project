@@ -201,7 +201,7 @@ function numAsPrice(price){
 }
 
 function updateProduct(productDiv){
-    debugger
+   
     productDiv.querySelector('.card-body .card-text').textContent = `${productDiv.dataset.name}  --  ${productDiv.dataset.quantity} left!`
 }
 

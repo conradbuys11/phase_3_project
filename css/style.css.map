@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAGA,AAAA,IAAI,AAAA,CACA,gBAAgB,CAAE,UAAU,CAC/B",
+    "sources": [
+        "../project_frontend/style.scss"
+    ],
+    "names": [],
+    "file": "style.css"
+}
