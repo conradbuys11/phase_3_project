@@ -1,10 +1,11 @@
 const URL = 'http://localhost:3000/'
 const top_header = () => document.querySelector('h1')
-const products_div = () => document.querySelector('div#products-div') //make sure to say products_div() when referencing this!
-const product_card = () => document.querySelector('div.index_card')
-const product_list = () => document.querySelector('div#product-list-cards div')
+//const products_div = () => document.querySelector('div#products-div') //make sure to say products_div() when referencing this!
+const product_cards = () => document.querySelector('div.index_cards')
+//const product_list = () => document.querySelector('div#product-list-cards div')
+const sortingDropdowns = () => document.querySelector('#sorting-dropdowns')
 const review_div = () => document.querySelector('#last-purchase')
-const sorting_buttons = () => document.querySelector('h2')
+const topBarSort = () => document.querySelector('h2')
 
 const IMG_GALLERY = [
     './imgs/photo1.jpg',
@@ -43,20 +44,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function onClick(e){
     if(e.target.classList.contains('purchase-button')){
-        purchaseProduct(e.target.parentNode)
+        purchaseProduct(e.target.parentNode.parentNode)
     }
-    else if(e.target.classList.contains('product-switch')){
-        fetch(URL+`products/${e.target.dataset.id}`)
-        .then(data => data.json())
-        .then(listProduct)
-    }
+    // else if(e.target.classList.contains('product-switch')){
+    //     fetch(URL+`products/${e.target.dataset.id}`)
+    //     .then(data => data.json())
+    //     .then(listProduct)
+    // }
     else if(e.target.id == "new-product"){
         fetch(URL+'products/', {method: 'POST', headers: {'Content-Type': 'application/json'}})
         .then(data => data.json())
         .then(buildProductListSingle)
     }
-    else if(e.target.classList.contains('sort-accessory')){
-        sortByCategoryFirst('Accessory')
+    else if(e.target.classList.contains('sort-category')){
+        //debugger
+        sortingDropdowns().querySelectorAll('.sort-category').forEach(dropdown => dropdown.classList.remove('active'))
+        e.target.classList.add('active')
+        sortByCategoryFirst(e.target)
     }
     else if(e.target.classList.contains('show-accessory')){
         onlyShowCategory('Accessory')
@@ -74,18 +78,19 @@ function listAllProducts(){
     fetch(URL + 'products')
     .then(data => data.json())
     .then(products => {
-        buildProductList(products)
-        setUpFrontPage(products)
+        products.forEach(listProduct)
+        // setUpFrontPage(products)
         // listProduct(products[0])
     })
 }
 
-function setUpFrontPage(products){
-    frontCards = document.querySelectorAll('div.front-card')
-    for(let i = 0; i < 6; i++){
-        frontCards[i].querySelector('p').innerText = products[i].name
-    }
-}
+// function setUpFrontPage(products){
+//     frontCards = document.querySelectorAll('div.front-card')
+//     //change front-cards to new thingy
+//     for(let i = 0; i < 6; i++){
+//         frontCards[i].querySelector('p').innerText = products[i].name
+//     }
+// }
 
 function buildProductList(products){
     //debugger
@@ -120,24 +125,59 @@ function buildProductListSingle(product){
     div.append(p2)
 }
 
-function listProduct(product){ //make the elements ahead of time, and just update what is inside the content
-    //add a li with the product name to the products div
-    //make sure to set product-switch to active & every other product switch to not active?
-    document.querySelector('.front-page-cards').style.display = 'none';
-    document.querySelector('.index_card').style.display = 'block';
-    let div = product_card()
+// function listAllProducts(products){
+//     products.forEach(listProduct)
+// }
+
+function listProduct(product){
+    // <div class="product index_card" style="display: none;">
+        // <img class="card-img-top" src=''> <!-- width="250px" height="250px" -->
+        // <div class='card-body'>
+        //     <p class='card-text'></p>
+        //     <div class='left'></div><div class='right'></div>
+        //     <button type="button" class='purchase-button btn btn-primary mt-3'>Purchase</button>
+        // </div>
+    // </div>
+    //document.querySelector('.front-page-cards').style.display = 'none';
+    let card = document.createElement('div')
+    card.classList.add('product', 'index_card')
     // div.classList.add('product')
     // div.classList.add('card')
-    div.dataset.name = product.name
-    div.dataset.quantity = product.quantity
-    div.dataset.id = product.id
+    card.dataset.name = product.name
+    card.dataset.quantity = product.quantity
+    card.dataset.id = product.id
+    card.dataset.category = product.category
+    card.dataset.price = product.price
+    card.dataset.color_primary = product.color_primary
 
-    //div.querySelector('img').src = IMG_GALLERY[Math.floor(Math.random() * IMG_GALLERY.length)]
-    div.querySelector('img').src = IMG_GALLERY[product.photo_id]
+    let img = document.createElement('img')
+    img.classList.add('card-img-top')
+    img.src = IMG_GALLERY[product.photo_id]
+    img.style = 'height: 50%'
 
-    div.querySelector('p').textContent = `${product.name}  --  ${product.quantity} left!`
-    div.querySelector('div.left').innerHTML = `Primary Color: ${product.color_primary}<br>Price: ${numAsPrice(product.price)}`
-    div.querySelector('div.right').innerHTML = `Category: ${product.category}<br>Release Date: ${parseDateTime(product.release_date)}`
+    let body = document.createElement('div')
+    body.classList.add('card-body')
+
+    let p = document.createElement('p')
+    p.classList.add('card-body')
+    p.textContent = `${product.name}  --  ${product.quantity} left!`
+
+    let left = document.createElement('div')
+    left.classList.add('left')
+    left.innerHTML = `Primary Color: ${product.color_primary}<br>Price: ${numAsPrice(product.price)}`
+
+    let right = document.createElement('div')
+    right.classList.add('right')
+    right.innerHTML =  `Category: ${product.category}<br>Release Date: ${parseDateTime(product.release_date)}`
+
+    let purchase = document.createElement('button')
+    purchase.type = 'button'
+    purchase.classList.add('purchase-button', 'btn', 'btn-primary', 'mt-3')
+    purchase.innerText = 'Purchase'
+
+    product_cards().append(card)
+    card.append(img, body)
+    body.append(p, left, right, purchase)
     //console.log(typeof(product.created_at))
     // let button = div.querySelector('button.purchase-button')
     // // button.classList.add('purchase-button')
@@ -161,12 +201,14 @@ function numAsPrice(price){
 }
 
 function updateProduct(productDiv){
-    productDiv.querySelector('p').textContent = `${productDiv.dataset.name}  --  ${productDiv.dataset.quantity} left!`
+    debugger
+    productDiv.querySelector('.card-body .card-text').textContent = `${productDiv.dataset.name}  --  ${productDiv.dataset.quantity} left!`
 }
 
 function purchaseProduct(productDiv){
-    debugger
-    if(productDiv.parentNode.dataset.quantity > 0){
+    //debugger
+    //
+    if(productDiv.dataset.quantity > 0){
         let pck = {}
         pck.method = 'PATCH'
         pck.headers = {'Content-Type': 'application/json'}
@@ -248,15 +290,17 @@ function parseDateTime(dateTime){
     return `${month} ${date[2]} @ ${time[0]}:${time[1]}`
 }
 
-function sortByCategoryFirst(category){
+function sortByCategoryFirst(categorySpan){
     //debugger
-    let topDivs = product_list().querySelectorAll(`div [data-category='${category}']`)
+    let category = categorySpan.dataset.id
+    let topDivs = product_cards().querySelectorAll(`div [data-category='${category}']`)
     topDivs.forEach(div => {
         div.parentNode.insertBefore(div, div.parentNode.childNodes[0])
     })
 }
 
 function onlyShowCategory(category){
+    //to be refactored
     product_list().querySelectorAll('div').forEach(product => {
         if(product.dataset.category != category){
             product.style.display = 'none'
