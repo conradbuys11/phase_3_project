@@ -2,23 +2,60 @@
 <html>
     <script src="src/index.js"></script>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <head>
         <title>Butts</title>
     </head>
 
     <body>
-        <h1 class="test">Welcome to Site</h1>
-
+        
         <div>
-            <h2>
-                <button type="button" class="sort-accessory">Sort By Accessory</button>
-                <button type="button" class="show-accessory">Only Show Accessories</button>
-                <button type="button" class="show-shoes">Only Show Shoes</button>
-                <button type="button" class="show-all">Show All</button>
-            </h2>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Test Brand</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <button type="button" class="sort-accessory dropdown-item">Sort By Accessory</button>
+                        <button type="button" class="show-accessory dropdown-item">Only Show Accessories</button>
+                        <button type="button" class="show-shoes dropdown-item">Only Show Shoes</button>
+                        <button type="button" class="show-all dropdown-item">Show All</button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            <h1 class="test">Welcome to Site</h1>
+            <!-- <nav class="navbar navbar-expand-sm navbar-light bg-light">
+                <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown"></div>
+                                
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav> -->
             <div id='products-div'>
                 <div id="product-list-cards">
-                    <div></div>
+                    <div class='list-group'>
+                    </div>
                     <button id="new-product" type="button">CREATE NEW AWESOME PRODUCT</button>
                 </div>
                 
@@ -28,7 +65,7 @@
                 </div>
 
                 <div class="front-page-cards">
-                    <div class='front-card' style='float: left;'>
+                    <div class='card'>
                         <p>Text</p>
                     </div>
                     <div class='front-card' style="float: right;">
@@ -43,17 +80,28 @@
                     <div class='front-card' style='float: left;'>
                         <p>Text</p>
                     </div>
-                    <div class='front-card' style="float: right;">
+                    <div class='card'>
                         <p>Text</p>
                     </div>
                 </div>
 
-                <div class="product card" style="display: none;">
-                    <img src='' width="250px" height="250px">
-                    <p></p>
-                    <div class='left'></div><div class='right'></div>
-                    <br><br>
-                    <button type="button" class='purchase-button'>Purchase</button>
+                <!-- <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div> -->
+                <div class='card'>
+                    <div class="product index_card" style="display: none;">
+                        <img class="card-img-top" src=''> <!-- width="250px" height="250px" -->
+                        <div class='card-body'>
+                            <p class='card-text'></p>
+                            <div class='left'></div><div class='right'></div>
+                            <button type="button" class='purchase-button btn btn-primary mt-3'>Purchase</button>
+                        </div>
+                    </div>
                 </div>
 
             </div>

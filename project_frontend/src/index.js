@@ -1,7 +1,7 @@
 const URL = 'http://localhost:3000/'
 const top_header = () => document.querySelector('h1')
 const products_div = () => document.querySelector('div#products-div') //make sure to say products_div() when referencing this!
-const product_card = () => document.querySelector('div.card')
+const product_card = () => document.querySelector('div.index_card')
 const product_list = () => document.querySelector('div#product-list-cards div')
 const review_div = () => document.querySelector('#last-purchase')
 const sorting_buttons = () => document.querySelector('h2')
@@ -94,8 +94,7 @@ function buildProductList(products){
 
 function buildProductListSingle(product){
     let div = document.createElement('div')
-    div.classList.add('product-switch')
-    div.classList.add('list-card')
+    div.classList.add('list-group-item', 'list-group-item-action', 'product-switch', 'list-card')
     div.dataset.id = `${product.id}`
     div.dataset.category = `${product.category}`
     div.dataset.price = `${product.price}`
@@ -111,7 +110,7 @@ function buildProductListSingle(product){
     p.innerText = product.name
 
     let p2 = document.createElement('p')
-    p2.classList.add('little-text')
+    p2.classList.add('little-text', 'badge', 'badge-danger', 'badge-pill')
     let date = product.release_date.split(' ')[0].split('-')
     let time = product.release_date.split(' ')[1].split(':')
     p2.innerText = `${time[0]}:${time[1]} - ${date[1]}/${date[2]}`
@@ -123,8 +122,9 @@ function buildProductListSingle(product){
 
 function listProduct(product){ //make the elements ahead of time, and just update what is inside the content
     //add a li with the product name to the products div
+    //make sure to set product-switch to active & every other product switch to not active?
     document.querySelector('.front-page-cards').style.display = 'none';
-    document.querySelector('.card').style.display = 'block';
+    document.querySelector('.index_card').style.display = 'block';
     let div = product_card()
     // div.classList.add('product')
     // div.classList.add('card')
@@ -153,7 +153,6 @@ function listProduct(product){ //make the elements ahead of time, and just updat
 }
 
 function numAsPrice(price){
-    debugger
     let newPrice = '$' + price
     if(newPrice.split(/\./)[1].length < 2){
         newPrice += '0'
@@ -166,7 +165,8 @@ function updateProduct(productDiv){
 }
 
 function purchaseProduct(productDiv){
-    if(productDiv.dataset.quantity > 0){
+    debugger
+    if(productDiv.parentNode.dataset.quantity > 0){
         let pck = {}
         pck.method = 'PATCH'
         pck.headers = {'Content-Type': 'application/json'}
