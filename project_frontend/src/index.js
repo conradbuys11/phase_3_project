@@ -54,7 +54,7 @@ function onClick(e){
     else if(e.target.id == "new-product"){
         fetch(URL+'products/', {method: 'POST', headers: {'Content-Type': 'application/json'}})
         .then(data => data.json())
-        .then(buildProductListSingle)
+        .then(listProduct)
     }
     else if(e.target.classList.contains('sort-category')){
         //debugger
