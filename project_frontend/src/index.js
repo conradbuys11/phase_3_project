@@ -159,7 +159,7 @@ function listProduct(product){
     body.classList.add('card-body')
 
     let p = document.createElement('p')
-    p.classList.add('card-body')
+    p.classList.add('card-text')
     p.textContent = `${product.name}  --  ${product.quantity} left!`
 
     let left = document.createElement('div')
