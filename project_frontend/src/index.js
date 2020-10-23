@@ -58,19 +58,30 @@ function onClick(e){
     }
     else if(e.target.classList.contains('sort-category')){
         //debugger
-        sortingDropdowns().querySelectorAll('.sort-category').forEach(dropdown => dropdown.classList.remove('active'))
-        e.target.classList.add('active')
+        setDropdownActive(e)
         sortByCategoryFirst(e.target)
     }
+    else if(e.target.classList.contains('sort-color')){
+        setDropdownActive(e)
+        sortByColorFirst(e.target)
+    }
     else if(e.target.classList.contains('show-accessory')){
+        setDropdownActive(e)
         onlyShowCategory('Accessory')
     }
     else if(e.target.classList.contains('show-all')){
+        setDropdownActive(e)
         showAll()
     }
     else if(e.target.classList.contains('show-shoes')){
+        setDropdownActive(e)
         onlyShowCategory('Shoes')
     }
+}
+
+function setDropdownActive(e){
+    document.querySelectorAll('.dropdown-item').forEach(dropdown => dropdown.classList.remove('active'))
+    e.target.classList.add('active')
 }
 
 function listAllProducts(){
@@ -194,7 +205,10 @@ function listProduct(product){
 
 function numAsPrice(price){
     let newPrice = '$' + price
-    if(newPrice.split(/\./)[1].length < 2){
+    if(newPrice.split(/\./).length == 1){
+        newPrice += '.00'
+    }
+    else if(newPrice.split(/\./)[1].length < 2){
         newPrice += '0'
     }
     return newPrice
@@ -299,9 +313,17 @@ function sortByCategoryFirst(categorySpan){
     })
 }
 
+function sortByColorFirst(colorSpan){
+    let color = colorSpan.dataset.id
+    let topDivs = product_cards().querySelectorAll(`div [data-color_primary='${color}']`)
+    topDivs.forEach(div =>{
+        div.parentNode.insertBefore(div, div.parentNode.childNodes[0])
+    })
+}
+
 function onlyShowCategory(category){
     //to be refactored
-    product_list().querySelectorAll('div').forEach(product => {
+    product_cards().querySelectorAll('div.index_card').forEach(product => {
         if(product.dataset.category != category){
             product.style.display = 'none'
         }
@@ -317,7 +339,7 @@ function sortByReleaseDay(){
 }
 
 function showAll(){
-    product_list().querySelectorAll('div').forEach(product => {
+    product_cards().querySelectorAll('div.index_card').forEach(product => {
         product.style.display = ''
     })
 }
