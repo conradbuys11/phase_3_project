@@ -13,7 +13,7 @@
     <body>
         
         <div>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
                 <a class="navbar-brand" href="#">Test Brand</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -57,24 +57,38 @@
                     <div class='list-group'>
                     </div>
                 </div> -->
-                <h2>Sort By...</h2>
-                <div id='sorting-dropdowns'>
-                    <div class="btn-group dropright">
+                <div class='position-fixed'>
+                    <h2>Sort By...</h2>
+                    <div id='sorting-dropdowns'>
+                        <div class="btn-group dropright">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categories
+                            </button>
+                            <div class="dropdown-menu">
+                            <span class='dropdown-item sort-category' data-id="Shirt">Tops</span>
+                            <span class='dropdown-item sort-category' data-id="Pants">Pants</span>
+                            <span class='dropdown-item sort-category' data-id="Shoes">Shoes</span>
+                            <span class='dropdown-item sort-category' data-id="Accessory">Accessories</span>
+                            </div>
+                    </div>
+                </div>
+                    <!-- <div class="btn-group dropright">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Categories
+                          Price
                         </button>
                         <div class="dropdown-menu">
-                          <span class='dropdown-item sort-category' data-id="Shirt">Tops</span>
-                          <span class='dropdown-item sort-category' data-id="Pants">Pants</span>
-                          <span class='dropdown-item sort-category' data-id="Shoes">Shoes</span>
-                          <span class='dropdown-item sort-category' data-id="Accessory">Accessories</span>
+                          <span class='dropdown-item sort-price' data-id="Low">Lowest First</span>
+                          <span class='dropdown-item sort-price' data-id="High">Highest First</span>
                         </div>
-                      </div>
+                    </div> 
+                    HOW DO I SORT SHIT? -->
+                    
+
                     <br><br>
                     <button id="new-product" type="button">CREATE NEW AWESOME PRODUCT</button>
                 </div>
                 
-                <div id='last-purchase'>
+                <div id='last-purchase' class="">
                     <h4>Last Purchase</h4>
                     <p></p>
                 </div>
